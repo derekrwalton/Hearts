@@ -22,7 +22,13 @@ public class Player {
     private Card[] hand; //This players cards.
     
     public Player(Card[] cards) {
-        hand = 
+        hand = cards;
+        score = 0;
+        for (Card hand1 : hand) {
+            if(hand1.getSuit() == 3 && hand1.getValue() == 2){
+                
+            }
+        }
     }    
     
     public Card play(){

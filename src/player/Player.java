@@ -35,7 +35,7 @@ public class Player {
         for (int i = 0; i < hand.length; i++) {
             if (hand[i].getSuit() == 3 && hand[i].getValue() == 2) {
                 hasTwoOfClubs = true;
-            } else {    //Left empty to move on.
+            } else {    //Left empty so the program will move on without error.
 
             }
         }

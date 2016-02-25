@@ -16,8 +16,8 @@ public class Player {
     @SuppressWarnings("unused")
     private boolean hasTwoOfClubs; //Used to determine order of play, for first hand.
     private int score;
-    private Card[] hand; //This players cards.
-    private boolean valid;
+    Card[] hand; //This players cards.
+    boolean valid;
 
     /**
      * Creates a Player that obtains the specified card set. Sets the players
@@ -42,7 +42,7 @@ public class Player {
         for (valid = false; valid == true;) { //Checks that card is in hand.
             i = value.nextInt(hand.length);
             if (hand[i] == null) {
-                throw new IllegalStateException("Card out of hand. Choose another.");
+                throw new IllegalStateException("Card already played. Choose another.");
             } else {
                 card = hand[i];
                 valid = true;

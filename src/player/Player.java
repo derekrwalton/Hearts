@@ -7,7 +7,7 @@ package player;
 
 import cards.Deck;
 import cards.Card;
-import java.util.Random;
+import java.util.*;
 
 /**
  *
@@ -15,12 +15,12 @@ import java.util.Random;
  */
 public class Player {
 
-    private final int playerNum;
+    private int playerNum = 0;
     private boolean hasLead; //Used to determine order of play, after first hand.
     private boolean hasTwoOfClubs; //Used to determine order of play, for first hand.
-    private int order; //Order of play.. IE: Who's turn is it?
     private int score;
     private Card[] hand; //This players cards.
+    private boolean valid;
 
     /**
      * Creates a Player that obtains the specified card set. Sets the players
@@ -32,18 +32,33 @@ public class Player {
     public Player(Card[] cards) {
         hand = cards;
         score = 0;
-        for (int i = 0; i < hand.length; i++) {
-            if (hand[i].getSuit() == 3 && hand[i].getValue() == 2) {
+        for (Card hand1 : hand) {
+            if (hand1.getSuit() == 3 && hand1.getValue() == 2) {
                 hasTwoOfClubs = true;
-            } else {    //Left empty so the program will move on without error.
-
+            } else {
+                //Left empty so the program will move on without error.
             }
+        }
+        if (playerNum == 0) {
+            this.playerNum = 0;
+            playerNum++;
         }
     }
 
     public Card play() {
         Random value = new Random();
-        Card card = hand[value.nextInt(hand.length)];
+        Card card = new Card(0,0);
+        int i = 0;
+        for (valid = false; valid == true;) {
+            i = value.nextInt(hand.length);
+            if (hand[i] == null) {
+                throw new IllegalStateException("Card out of hand. Choose another.");
+            } else {
+                card = hand[i];
+                valid = true;
+            }
+        }
+        hand[i] = null;
         return card;
     }
 
@@ -51,7 +66,8 @@ public class Player {
         return hand;
     }
 
-    public int calcScore() {
+    public int calcScore(int difference) {
+        score = score + difference;
         return score;
     }
 

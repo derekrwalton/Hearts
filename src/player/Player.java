@@ -15,8 +15,9 @@ import java.util.*;
  */
 public class Player {
 
-    private int playerNum = 0;
+    private final int HANDSIZE = 13;
     private boolean hasLead; //Used to determine order of play, after first hand.
+    @SuppressWarnings("unused")
     private boolean hasTwoOfClubs; //Used to determine order of play, for first hand.
     private int score;
     private Card[] hand; //This players cards.
@@ -29,27 +30,20 @@ public class Player {
      *
      * @param cards
      */
-    public Player(Card[] cards) {
-        hand = cards;
+    public Player() {
+        hand = new Card[HANDSIZE];
+        for (int i = 0; i < HANDSIZE; i++) {
+            hand[i] = Deck.dealCard();
+        }
         score = 0;
-        for (Card hand1 : hand) {
-            if (hand1.getSuit() == 3 && hand1.getValue() == 2) {
-                hasTwoOfClubs = true;
-            } else {
-                //Left empty so the program will move on without error.
-            }
-        }
-        if (playerNum == 0) {
-            this.playerNum = 0;
-            playerNum++;
-        }
+        hasTwoOfClubs();
     }
 
     public Card play() {
         Random value = new Random();
-        Card card = new Card(0,0);
+        Card card = new Card(0, 0);
         int i = 0;
-        for (valid = false; valid == true;) {
+        for (valid = false; valid == true;) { //Checks that card is in hand.
             i = value.nextInt(hand.length);
             if (hand[i] == null) {
                 throw new IllegalStateException("Card out of hand. Choose another.");
@@ -58,8 +52,18 @@ public class Player {
                 valid = true;
             }
         }
-        hand[i] = null;
+        hand[i] = null; // "Removes" card from hand.
         return card;
+    }
+
+    public void hasTwoOfClubs() {
+        for (int i = 0; i < hand.length; i++) {
+            if (hand[i].getSuit() == 3 && hand[i].getValue() == 2) {
+                hasTwoOfClubs = true;
+            } else {    //Left empty so the program will move on without error.
+
+            }
+        }
     }
 
     public Card[] getHand() {
@@ -69,6 +73,14 @@ public class Player {
     public int calcScore(int difference) {
         score = score + difference;
         return score;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return "Player [hand=" + Arrays.toString(hand) + "]";
     }
 
 }

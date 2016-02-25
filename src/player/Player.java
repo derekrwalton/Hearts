@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package player;
 
 import cards.Deck;
@@ -30,10 +26,10 @@ public class Player {
      *
      * @param cards
      */
-    public Player() {
+    public Player(Deck deck) {
         hand = new Card[HANDSIZE];
         for (int i = 0; i < HANDSIZE; i++) {
-            hand[i] = Deck.dealCard();
+            hand[i] = deck.dealCard();
         }
         score = 0;
         hasTwoOfClubs();
